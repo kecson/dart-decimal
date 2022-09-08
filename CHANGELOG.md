@@ -1,7 +1,7 @@
 # 2.3.1 (2022-09-08)
 
 - Fix `Decimal.pow`、`Decimal operator /`、 `Decimal operator /` return Decimal
-- Fix `Decimal.toString` return FinitePrecision String.
+- Fix `Decimal.toString` return FinitePrecision String. example: (Decimal.fromInt(1)/Decimal.fromInt(3)).toString()
 - Fix `RationalExt.toDecimal()` 
 
 # 2.3.0 (2022-09-07)

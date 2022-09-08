@@ -50,21 +50,25 @@ void main() {
       '-1',
       '-1.1',
       '23',
-      // '31878018903828899277492024491376690701584023926880.1'
+      '31878018903828899277492024491376690701584023926880.1'
     ]) {
       expectThat(dec(n).toString()).equals(n);
     }
 
     expectThat(dec('31878018903828899277492024491376690701584023926880.1')
-            .toString())
+            .toStringAsExponential(14))
         .equals('3.18780189038289e+49');
-
-    expectThat((dec('1') / dec('3')).toString()).startsWith('0.3333333333');
+    final decimal = Decimal.fromInt(1) / Decimal.fromInt(3);
+    expectThat(decimal.toString())
+        .equals('0.${'3' * decimal.maxFractionDigits}');
+    decimal.maxFractionDigits = 5;
+    expectThat(decimal.toString()).equals('0.33333');
     expectThat(dec('9.9').toString()).equals('9.9');
     expectThat((dec('1.0000000000000000000000000000000000000000000000001') *
                 dec('1.0000000000000000000000000000000000000000000000001'))
             .toString())
-        .equals('1.0');
+        .equals(
+            '1.00000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000001');
   });
   test('compareTo(Decimal other)', () {
     expectThat(dec('1').compareTo(dec('1'))).equals(0);

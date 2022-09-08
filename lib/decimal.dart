@@ -76,18 +76,29 @@ class Decimal implements Comparable<Decimal> {
   @override
   int get hashCode => _rational.hashCode;
 
+  /// [toString] max fractionDigits. default is 18
+  ///
+  ///@example:
+  ///```dart
+  ///  final decimal = Decimal.fromInt(1)/Decimal.fromInt(3);
+  ///  decimal.maxFractionDigits=5;
+  ///  decimal.toString()=='0.33333';
+  ///```
+  int maxFractionDigits = 18;
+
   /// Returns a [String] representation of `this`.
   @override
   String toString() {
     if (_rational.isInteger) return _rational.toString();
-    // return  truncate value.
-    final value = _rational.toDouble().toString();
-    // var value = toStringAsFixed(scale);
-    // while (
-    //     value.contains('.') && (value.endsWith('0') || value.endsWith('.'))) {
-    //   value = value.substring(0, value.length - 1);
-    // }
-    return value;
+    final fractionDigits =
+        _rational.hasFinitePrecision ? scale : maxFractionDigits;
+    var asString = toStringAsFixed(fractionDigits);
+    while (asString.contains('.') &&
+        (asString.endsWith('0') || asString.endsWith('.'))) {
+      asString = asString.substring(0, asString.length - 1);
+    }
+
+    return asString;
   }
 
   /// Converts `this` to [String] by using [toString].
